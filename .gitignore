@@ -200,6 +200,50 @@ cython_debug/
 #  refer to https://docs.cursor.com/context/ignore-files
 .cursorignore
 .cursorindexingignore
+# -------------------------------------------------
+# NeoSHADE Home Security additions
+# -------------------------------------------------
+
+# Home Assistant
+.storage/
+home-assistant_v2.db*
+*.db
+*.db-shm
+*.db-wal
+deps/
+tts/
+*.log
+
+# HA secrets
+secrets.yaml
+
+# ESPHome
+.esphome/
+*.bin
+*.pioenvs/
+*.piolibdeps/
+
+# Docker
+docker-compose.override.yml
+*.pid
+*.sock
+
+# Local configs
+config.yaml
+wifi.yaml
+local_config.yaml
+
+# Network / device secrets
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+
+# Temporary files
+tmp/
+temp/
+*.cache
 
 # Marimo
 marimo/_static/
