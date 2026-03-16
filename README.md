@@ -1,5 +1,7 @@
 # wifi-presence-security-homeassistant
-This project combines WiFi-based presence detection (via router scanning, ESPHome on ESP32 for room-level accuracy, or CSI if advanced), Home Assistant as the central hub (running on a VPS or local machine), and Amazon Alexa/Echo for voice announcements/talk-back in occupied rooms.
+
+This project combines WiFi-based presence detection (via router scanning, ESPHome on ESP32 for room-level accuracy, or CSI if advanced), Home Assistant as the central hub (running on a VPS or local machine), and Amazon Alexa/Echo for voice announcements and interaction in occupied rooms.
+
 <div align="center">
 
 <img src="https://neo-shade.com/wp-content/uploads/2026/03/neoSHADE-home-security-banner.jpg" width="100%" />
@@ -23,6 +25,31 @@ Built on **Home Assistant + ESP32 + local network intelligence**.
 
 ---
 
+# Quick Start
+
+Clone the repository
+
+```bash
+git clone https://github.com/JokerJonny/wifi-presence-security-homeassistant.git
+cd wifi-presence-security-homeassistant
+```
+
+Start the system
+
+```bash
+docker compose up -d
+```
+
+Run the WiFi scanner
+
+```bash
+python scripts/wifi_presence_scanner.py
+```
+
+Home Assistant will now receive presence updates via MQTT.
+
+---
+
 # Overview
 
 The **NeoSHADE Home Security System** is a privacy-first smart home security platform that uses **WiFi network awareness** instead of cameras to determine who is present in your home.
@@ -38,11 +65,9 @@ The system can then automatically communicate through **Amazon Echo devices**.
 
 Example messages:
 
+> "Welcome home JonnyG. Security system confirms you are in the living room."
 
-"Welcome home JonnyG. Security system confirms you are in the living room."
-
-"Alert. Unknown device detected in the bedroom."
-
+> "Alert. Unknown device detected in the bedroom."
 
 Everything runs **locally on your network**.
 
@@ -74,27 +99,27 @@ Runs entirely on **Home Assistant + your own hardware**.
 
 # System Architecture
 
-
+```
 Phones / Devices
-│
-▼
+       │
+       ▼
 WiFi Network
-│
-▼
+       │
+       ▼
 Router + ESP32 Presence Sensors
-│
-▼
+       │
+       ▼
 Home Assistant Server
 (VPS / Raspberry Pi)
-│
-├── Presence Detection
-├── Automation Engine
-└── Security Logic
-│
-▼
+       │
+ ├── Presence Detection
+ ├── Automation Engine
+ └── Security Logic
+       │
+       ▼
 Amazon Echo Devices
 (Room announcements)
-
+```
 
 ---
 
@@ -113,33 +138,31 @@ Recommended for room accuracy:
 
 Estimated cost:
 
-
+```
 ESP32 boards: $5 each
 Home Assistant: free
 Total system cost: ~$10–30
-
+```
 
 ---
 
-# Quick Start
+# Install Home Assistant
 
-## Install Home Assistant
-
-
-docker run -d
---name homeassistant
---restart=unless-stopped
--v /config:/config
--e TZ=America/New_York
---network=host
+```bash
+docker run -d \
+--name homeassistant \
+--restart=unless-stopped \
+-v /config:/config \
+-e TZ=America/New_York \
+--network=host \
 ghcr.io/home-assistant/home-assistant:stable
-
+```
 
 Open the dashboard:
 
-
+```
 http://YOUR_SERVER_IP:8123
-
+```
 
 ---
 
@@ -147,14 +170,13 @@ http://YOUR_SERVER_IP:8123
 
 Inside Home Assistant:
 
-
+```
 Settings → Devices & Services → Add Integration
-
+```
 
 Add either:
 
 • **Home Assistant Companion App**  
-or  
 • **Router integration** (ASUS, UniFi, TP-Link, etc)
 
 Link devices to **Persons** in Home Assistant.
@@ -167,20 +189,20 @@ Install **Alexa Media Player** using HACS.
 
 Your Echo devices will appear as:
 
-
+```
 media_player.echo_living_room
 media_player.echo_kitchen
 media_player.echo_bedroom
-
+```
 
 Example automation:
 
-
+```yaml
 service: tts.amazon_polly
 data:
-message: "Welcome home JonnyG. Security system confirms you are in the living room."
+  message: "Welcome home JonnyG. Security system confirms you are in the living room."
 target: media_player.echo_living_room
-
+```
 
 ---
 
@@ -190,20 +212,19 @@ For more accurate room presence detection, deploy ESP32 nodes.
 
 Example ESPHome configuration:
 
-
+```yaml
 esphome:
-name: livingroom-presence
+  name: livingroom-presence
 
 wifi:
-ssid: !secret wifi_ssid
-password: !secret wifi_password
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
 
 sensor:
-
-platform: wifi_signal
-name: "Living Room WiFi RSSI"
-update_interval: 5s
-
+  - platform: wifi_signal
+    name: "Living Room WiFi RSSI"
+    update_interval: 5s
+```
 
 These nodes allow Home Assistant to determine **exact room location**.
 
@@ -229,26 +250,26 @@ Optional integrations:
 
 # Repository Structure
 
-
+```
 wifi-presence-security-homeassistant
 │
 ├── README.md
 ├── LICENSE
 │
 ├── esphome
-│ ├── kitchen.yaml
-│ ├── livingroom.yaml
-│ └── bedroom.yaml
+│   ├── kitchen.yaml
+│   ├── livingroom.yaml
+│   └── bedroom.yaml
 │
 ├── automations
-│ └── presence_announcements.yaml
+│   └── presence_announcements.yaml
 │
 ├── docker
-│ └── docker-compose.yml
+│   └── docker-compose.yml
 │
 └── docs
-└── architecture.md
-
+    └── architecture.md
+```
 
 ---
 
@@ -260,7 +281,7 @@ Planned improvements:
 • AI behavior recognition  
 • multi-home dashboards  
 • NeoSHADE mobile interface  
-• visual positioning integration
+• visual positioning integration  
 
 ---
 
@@ -272,12 +293,10 @@ NeoSHADE proves you can build a powerful security system **locally** using open 
 
 Goals:
 
-
-Privacy
-Transparency
-Control
-Security
-
+• Privacy  
+• Transparency  
+• Control  
+• Security  
 
 ---
 
