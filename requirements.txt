@@ -1,13 +1,4 @@
-wifi-presence-security-homeassistant
-
-automations/
-config/
-docs/
-esphome/
-scripts/
-
-docker-compose.yml
-requirements.txt
-README.md
-LICENSE
-.gitignore
+requests
+python-nmap
+scapy
+paho-mqtt
