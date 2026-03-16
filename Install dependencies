@@ -1,0 +1,35 @@
+
+Run the scanner
+
+## Pull Requests
+
+When submitting a pull request:
+
+• use clear commit messages  
+• describe the purpose of your change  
+• include testing details if applicable  
+
+## Code Guidelines
+
+Please follow these principles:
+
+• clear readable code  
+• minimal external dependencies  
+• security-first design  
+• local-first architecture
+
+## Feature Ideas
+
+Potential areas for development:
+
+• WiFi CSI motion detection  
+• AI behavior analysis  
+• ESP32 room mapping  
+• anomaly detection  
+• smart alarm integrations
+
+We welcome experimentation and innovation.
+
+---
+
+NeoSHADE AI
