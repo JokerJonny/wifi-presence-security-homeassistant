@@ -1,1 +1,29 @@
+version: "3.8"
 
+services:
+
+  homeassistant:
+    container_name: homeassistant
+    image: ghcr.io/home-assistant/home-assistant:stable
+    volumes:
+      - ./config:/config
+    environment:
+      - TZ=America/New_York
+    network_mode: host
+    restart: unless-stopped
+
+  mosquitto:
+    container_name: mqtt
+    image: eclipse-mosquitto
+    ports:
+      - "1883:1883"
+    restart: unless-stopped
+
+  esphome:
+    container_name: esphome
+    image: esphome/esphome
+    ports:
+      - "6052:6052"
+    volumes:
+      - ./esphome:/config
+    restart: unless-stopped
